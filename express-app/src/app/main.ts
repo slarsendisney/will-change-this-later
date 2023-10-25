@@ -4,15 +4,16 @@ import path from "path";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import fetch from "node-fetch-commonjs";
+import { loadIndexAsChatEngine, queryChatEngine } from "@/utils/loadAndQueryIndex";
 
 let chatEngine: ContextChatEngine;
 const app = express();
 const port = process.env.PORT || 8080; // default port to listen
 
-// (async () => {
-//   chatEngine = await loadIndexAsChatEngine();
-//   console.log("🔎 Loaded index");
-// })();
+(async () => {
+  chatEngine = await loadIndexAsChatEngine();
+  console.log("🔎 Loaded index");
+})();
 
 dotenv.config();
 // Configure Express to use body-parser as middle-ware.
@@ -37,11 +38,11 @@ app.post("/api/chat", async (req, res) => {
 
   const { query } = req.body;
 
-  // const response = await queryChatEngine(chatEngine, query);
+  const response = await queryChatEngine(chatEngine, query);
 
   // send as json
   res.status(200).json({
-    response: {},
+    response,
   });
 });
 

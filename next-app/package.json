@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "dotenv": "^16.3.1",
+    "framer-motion": "10.12.16",
+    "install": "^0.13.0",
     "llamaindex": "0.0.0-20231018030303",
-    "next": "13.5.6",
+    "next": "13.4.7",
     "node-fetch": "^3.3.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-highlight-words": "^0.20.0",
+    "use-resize-observer": "^9.1.0"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -23,7 +28,7 @@
     "@userlike/messenger": "^1.2.4",
     "autoprefixer": "^10",
     "eslint": "^8",
-    "eslint-config-next": "13.5.6",
+    "eslint-config-next": "13.4.7",
     "postcss": "^8",
     "tailwindcss": "^3",
     "typescript": "^5"

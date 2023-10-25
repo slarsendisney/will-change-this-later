@@ -5,6 +5,7 @@ import {
   VectorIndexRetriever,
   storageContextFromDefaults,
 } from "llamaindex";
+import fs from "fs";
 import dotenv from "dotenv";
 
 dotenv.config({
@@ -23,8 +24,10 @@ const getStorageContext = async () => {
 export const queryChatEngine = async (chatEngine, query) => {
   const loadedResponse = await chatEngine.chat(query);
 
-
-  console.log(loadedResponse);
+  loadedResponse.sourceNodes.map((node) => {
+    console.log(node.metadata.productId);
+  })
+ 
   return loadedResponse.toString();
 };
 
@@ -33,7 +36,7 @@ export const loadIndexAsChatEngine = async () => {
   const storageContext = await getStorageContext();
   const loadedIndex = await VectorStoreIndex.init({ storageContext });
   const retriever = loadedIndex.asRetriever();
-  retriever.similarityTopK = 2;
+  retriever.similarityTopK = 10;
   const chatEngine = new ContextChatEngine({
     retriever,
     chatModel: new OpenAI({
@@ -52,8 +55,7 @@ const testIndex = async () => {
 
   const response = await queryChatEngine(
     chatEngine,
-    "sensor to detect transparent objects",
-    false
+    "what lidar products do you have and what are the differences in benefits between them?"
   );
 
   console.log(response);

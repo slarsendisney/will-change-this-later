@@ -42,7 +42,7 @@ const createAndPersistIndexText = async () => {
 
       return hasAllMetadata && hasAllMetadataArray;
     })
-    .slice(0, 1000);
+    .slice(1001, 1250);
 
   const productIdsAndDocuments = filteredProducts.map((product) => {
     console.log(product.masterValues);
