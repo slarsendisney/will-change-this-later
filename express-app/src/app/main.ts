@@ -4,7 +4,7 @@ import path from "path";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import fetch from "node-fetch-commonjs";
-import { loadIndexAsChatEngine, queryChatEngine } from "@/utils/loadAndQueryIndex";
+import { loadIndexAsChatEngine, queryChatEngine } from "../utils/loadAndQueryIndex";
 
 let chatEngine: ContextChatEngine;
 const app = express();
