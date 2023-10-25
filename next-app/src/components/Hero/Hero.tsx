@@ -158,7 +158,7 @@ export const Hero = () => {
                   <div className="grid grid-cols-3 gap-4">
                     {[
                       "Sensors to detect transparent objects",
-                      "Sensors to detect transparent objects",
+                      "Help me find a light emitting diode",
                       "Sensors to detect transparent objects",
                       "Sensors to detect transparent objects",
                       "Sensors to detect transparent objects",
