@@ -12,13 +12,26 @@ const createApi = async () => {
   return api;
 };
 
+const toggleVisibility = (userlike) => {
+  userlike.maximize(); // opens the chat
+
+  // visibility shows the widget button 
+  // userlike.setVisibility({
+  //   main: true,
+  //   button: false,
+  //   notifications: false,
+  // });
+}
+
 interface MessengerContextAttributes {
   userlike: any
+  toggleVisibility: (userlike) => void;
 }
 
 const MessengerContext =
   React.createContext<MessengerContextAttributes>({
-    userlike: undefined
+    userlike: undefined,
+    toggleVisibility: (userlike) => { }
   });
 
 export const MessengerProvider = ({ ...props }) => {
@@ -37,6 +50,7 @@ export const MessengerProvider = ({ ...props }) => {
     <MessengerContext.Provider
       value={{
         userlike,
+        toggleVisibility
       }}
       {...props}
     />

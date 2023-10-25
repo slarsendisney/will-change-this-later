@@ -4,8 +4,14 @@ import { useEffect } from "react";
 
 
 const Search = () => {
-  const { userlike } = useMessenger();
-  console.log(userlike, 'userlike in search')
+  const { userlike, toggleVisibility } = useMessenger();
+  useEffect(() => {
+
+    if (!userlike) return;
+
+    // open chat on mount - later replace with on search
+    toggleVisibility(userlike)
+  }, [userlike])
 
   return (
     <div className='text-honolulu-blue'>Search for a SICK product</div>
