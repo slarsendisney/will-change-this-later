@@ -38,11 +38,11 @@ export const Hero = () => {
     // if query has changed update input
   }, [query]);
 
-  const fetchStuff = async () => {
+  const fetchStuff = async (overrideQuery?: string) => {
     setLoading(true);
     const res = await fetch("/api", {
       method: "post",
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query: overrideQuery || query }),
       headers: { "Content-Type": "application/json" },
     });
     const data = await res.json();
@@ -52,8 +52,8 @@ export const Hero = () => {
     setResultReturned(true);
   };
 
-  const onClick = () => {
-    fetchStuff();
+  const onClick = (overrideQuery?: string) => {
+    fetchStuff(overrideQuery);
   };
   return (
     <div className="mx-auto w-full sm:px-6 lg:px-8 max-w-7xl">
@@ -69,7 +69,7 @@ export const Hero = () => {
         transition={{
           duration: 0.8,
         }}
-        className="h-48 -mb-4 overflow-visible relative"
+        className="sm:h-48 mb-4 overflow-visible relative"
       >
         <div className="absolute bottom-0 w-full">
           <PathLogo className="w-1/2 mx-auto z-50 text-white opacity-30" />
@@ -167,7 +167,7 @@ export const Hero = () => {
                   />
                   <button
                     className="btn btn-primary btn-lg join-item"
-                    onClick={onClick}
+                    onClick={() => onClick()}
                   >
                     <RocketLaunchIcon className="h-6 w-6 m-1" />
                   </button>
@@ -179,7 +179,7 @@ export const Hero = () => {
                   <p>Trending Questions</p>
                 </div>
                 {isVisible && (
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     {[
                       "Sensors to detect transparent objects",
                       "Help me find a light emitting diode",
@@ -204,8 +204,7 @@ export const Hero = () => {
                         key={q + i}
                         className="card bg-gray-800 p-4"
                         onClick={(e) => {
-                          setQuery(q);
-                          onClick();
+                          onClick(q);
                         }}
                       >
                         <p>{q}</p>
@@ -224,15 +223,17 @@ export const Hero = () => {
                     <MagnifyingGlassIcon className="h-4 w-4 mr-1" />
                     PRODUCT SEARCH
                   </div>
-                  <div className="">
+                  <div className="font-code">
                     {data.data.message
                       .split("\n")
                       .map((line: string, i: number) => (
                         <AnimatedText
                           text={line}
                           key={i}
-                          delay={i / 5}
-                          className="text-xl font-medium text-left"
+                          delay={i / 4}
+                          className={`text-sm text-left ${
+                            i === 0 ? "text-xl text-white" : ""
+                          }`}
                         />
                       ))}
                   </div>

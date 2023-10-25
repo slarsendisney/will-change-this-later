@@ -15,6 +15,7 @@ const config: Config = {
         'mono': ['ui-monospace', 'SFMono-Regular',],
         'display': ['Oswald',],
         'body': ['"Open Sans"',],
+        'code': ["var(--font-code)"]
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

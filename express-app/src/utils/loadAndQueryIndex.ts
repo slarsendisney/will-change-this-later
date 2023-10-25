@@ -12,7 +12,7 @@ export const loadIndexAsRetriever = async (): Promise<VectorIndexRetriever> => {
   const storageContext = await getStorageContext();
   const loadedIndex = await VectorStoreIndex.init({ storageContext });
   const retriever = loadedIndex.asRetriever();
-  retriever.similarityTopK = 5;
+  retriever.similarityTopK = 4;
   return retriever;
 };
 
@@ -21,11 +21,11 @@ export const loadIndexAsChatEngine = async (): Promise<ContextChatEngine> => {
   const storageContext = await getStorageContext();
   const loadedIndex = await VectorStoreIndex.init({ storageContext });
   const retriever = loadedIndex.asRetriever();
-  retriever.similarityTopK = 5;
+  retriever.similarityTopK = 4;
   const chatEngine = new ContextChatEngine({
     retriever,
     chatModel: new OpenAI({
-      maxTokens: 300,
+      maxTokens: 250,
       maxRetries: 0,
       model: "gpt-3.5-turbo",
       temperature: 0,
@@ -51,7 +51,7 @@ export const queryRetriever = async (
   const chatEngine = new ContextChatEngine({
     retriever,
     chatModel: new OpenAI({
-      maxTokens: 350,
+      maxTokens: 250,
       maxRetries: 0,
       model: "gpt-3.5-turbo",
       temperature: 0,

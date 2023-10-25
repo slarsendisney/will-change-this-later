@@ -14,11 +14,12 @@ export const ProductSearch = ({
   data: any;
   query: string;
 }): JSX.Element => (
-  <div className="grid grid-cols-3 gap-4">
+  <div className="grid md:grid-cols-3 gap-4">
     {(data.data.productItems as any).map((item:any, i:number) => {
       const { MetaTitle, MetaDescription, DefPictureUrl } = item.records[0];
 
-      console.log(DefPictureUrl.length > 0 )
+
+    
       return (
         <m.div
           key={i}
@@ -50,7 +51,7 @@ export const ProductSearch = ({
             )}
           </div>
           <div className="card-body bg-gray-800">
-            <h2 className="card-title">{MetaTitle}</h2>
+            <h2 className="card-title">{MetaTitle || "-"}</h2>
             <p>
               <Highlighter
                 highlightClassName={`text-white bg-gray-700 rounded`}
@@ -58,7 +59,7 @@ export const ProductSearch = ({
                   .split(" ")
                   .map((q, i) => (i > 0 ? ` ${q} ` : `${q} `))}
                 autoEscape={true}
-                textToHighlight={MetaDescription.slice(0, 200)+"..."}
+                textToHighlight={(MetaDescription || "-").slice(0, 200)+"..."}
               />
             </p>
             <div className="card-actions justify-end">
