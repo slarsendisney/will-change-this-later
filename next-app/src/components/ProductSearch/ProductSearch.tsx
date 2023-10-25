@@ -14,7 +14,7 @@ export const ProductSearch = ({
   data: any;
   query: string;
 }): JSX.Element => (
-  <div className="grid md:grid-cols-3 gap-4">
+  <div className="grid md:grid-cols-2 gap-4">
     {(data.data.productItems as any)
       .filter((item:any) => item.records.length > 0)
       .map((item: any, i: number) => {

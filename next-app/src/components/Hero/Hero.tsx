@@ -70,7 +70,7 @@ export const Hero = () => {
         transition={{
           duration: 0.8,
         }}
-        className="sm:h-48 mb-4 overflow-visible relative"
+        className="sm:h-24 md:h-32 lg:h-48 mb-4 overflow-visible relative"
       >
         <div className="absolute bottom-0 w-full">
           <PathLogo className="w-1/2 mx-auto z-50 text-white opacity-30" />
@@ -89,7 +89,7 @@ export const Hero = () => {
           delay: 0.3,
           duration: 0.6,
         }}
-        className="relative isolate overflow-hidden bg-gray-900 px-6 py-24 shadow-2xl sm:rounded-3xl sm:px-24 xl:py-32"
+        className="relative isolate overflow-hidden bg-gray-900 mx-4 px-6 py-24 shadow-2xl rounded-3xl sm:px-24 xl:py-32"
       >
         <SickLogo
           className={`w-24 absolute top-0 left-0 z-50 text-white m-8 opacity-50 `}
@@ -161,13 +161,13 @@ export const Hero = () => {
                     name="search"
                     type="serch"
                     required
-                    className="input input-lg w-full bg-gray-800 text-white join-item"
+                    className="input md:input-lg w-full bg-gray-800 text-white join-item"
                     placeholder="Ask a Question"
                     onChange={(e) => setQuery(e.target.value)}
                     // value={query}
                   />
                   <button
-                    className="btn btn-primary btn-lg join-item"
+                    className="btn btn-primary md:btn-lg join-item"
                     onClick={() => onClick()}
                   >
                     <RocketLaunchIcon className="h-6 w-6 m-1" />
@@ -183,11 +183,11 @@ export const Hero = () => {
                   <div className="grid md:grid-cols-3 gap-4">
                     {[
                       "Sensors to detect transparent objects",
-                      "Help me find a light emitting diode",
-                      "Sensors to detect transparent objects",
-                      "Sensors to detect transparent objects",
-                      "Sensors to detect transparent objects",
-                      "Sensors to detect transparent objects",
+                      "A light emitting diode",
+                      "Motion control sensors",
+                      "Air quality measuring devices",
+                      "Track and trace systems",
+                      "Robot guidance systems",
                     ].map((q, i) => (
                       <m.button
                         initial={{

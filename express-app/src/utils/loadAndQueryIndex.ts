@@ -37,18 +37,16 @@ export const loadIndexAsChatEngine = async (): Promise<ContextChatEngine> => {
 
 export const queryChatEngine = async (
   chatEngine: ContextChatEngine,
-  query: string
+  query: string,
 ) => {
-  const loadedResponse = await chatEngine.chat(
-    query
-  );
+  const loadedResponse = await chatEngine.chat(query);
 
-  return loadedResponse;
+  return loadedResponse
 };
 
 export const queryRetriever = async (
   retriever: VectorIndexRetriever,
-  query: string
+  query: string,
 ) => {
   const chatEngine = new ContextChatEngine({
     retriever,

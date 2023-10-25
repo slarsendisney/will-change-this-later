@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       - CUSTOMER_SUPPORT: identifies users looking to speak to a member of the team in regard to the product they have already purchased.
       - PRESS:  identifies users wanting to read published content.
       - SERVICE:  identifies users looking to find information about services.
-      - NAVIGATION: identify users that are looking for a page or information.
+      - NAVIGATION: identify users that are looking for information online.
       - FALLBACK: all other user questions should fall into this category.
       
       You must respond with either PRODUCT_SEARCH, CUSTOMER_SUPPORT or FALLBACK. DO NOT INCLUDE ANY OTHER TEXT.`;
@@ -98,8 +98,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
       break;
     case "CUSTOMER_SUPPORT":
+      dataObj["message"] = "Need to speak to a human?";
       break;
     case "NAVIGATION":
+      dataObj["message"] = "Let's navigate!";
       break;
     default:
       dataObj["message"] = "Oh no! I don't know how to answer that question.";
