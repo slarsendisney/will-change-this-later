@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
+import useMessenger from '../providers/messenger-context';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Script async type="text/javascript" src="https://userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/e94b2a886102407180e6da6d64587496240c31106373405583192852825e5017.js" />
+      </body>
     </html>
   )
 }
