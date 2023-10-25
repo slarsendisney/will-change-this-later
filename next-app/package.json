@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@types/react-highlight-words": "^0.16.6",
     "daisyui": "^3.9.3",
     "dotenv": "^16.3.1",
     "framer-motion": "10.12.16",

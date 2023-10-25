@@ -31,6 +31,14 @@ export const Hero = () => {
       setLoading(false);
       setResultReturned(true);
     }, 3000);
+
+
+    fetch('/api', {
+      method: 'post',
+      body: JSON.stringify(query),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
   };
   return (
     <div className="mx-auto w-full sm:px-6 lg:px-8 max-w-7xl">
@@ -88,12 +96,12 @@ export const Hero = () => {
                 animate={
                   loading
                     ? {
-                        rotate: 360,
-                        scale: [0.5, 0.4, 0.5],
-                      }
+                      rotate: 360,
+                      scale: [0.5, 0.4, 0.5],
+                    }
                     : {
-                        scale: 1,
-                      }
+                      scale: 1,
+                    }
                 }
                 transition={{
                   repeat: Infinity,
@@ -103,17 +111,15 @@ export const Hero = () => {
                 className="absolute top-0 left w-full h-full flex items-center justify-center"
               >
                 <NebulaLogo
-                  className={`w-96 h-96 transition-all duration-200 transform ${
-                    loading
-                      ? "opacity-80 scale-50 text-blue-400"
-                      : "opacity-10 text-gray-200"
-                  } `}
+                  className={`w-96 h-96 transition-all duration-200 transform ${loading
+                    ? "opacity-80 scale-50 text-blue-400"
+                    : "opacity-10 text-gray-200"
+                    } `}
                 />
               </m.div>
               <h2
-                className={`mx-auto max-w-2xl text-center text-5xl font-bold tracking-tight text-white sm:text-6xl transition-all duration-200 ${
-                  loading ? "opacity-0" : "opacity-100"
-                }`}
+                className={`mx-auto max-w-2xl text-center text-5xl font-bold tracking-tight text-white sm:text-6xl transition-all duration-200 ${loading ? "opacity-0" : "opacity-100"
+                  }`}
               >
                 Nebula
               </h2>
@@ -232,7 +238,7 @@ export const Hero = () => {
                         <p>
                           <Highlighter
                             highlightClassName={`underline text-white bg-gray-700 rounded`}
-                            searchWords={query.split(" ").map((q, i) =>  i > 0 ? ` ${q} ` : `${q} `)}
+                            searchWords={query.split(" ").map((q, i) => i > 0 ? ` ${q} ` : `${q} `)}
                             autoEscape={true}
                             textToHighlight={"My test description that is all about lazy foxes and dogs"}
                           />
