@@ -5,7 +5,7 @@ import { useMessenger } from "@/providers/messenger-context";
 const Search = () => {
   const { userlike } = useMessenger();
   return (
-    <div>Search for a SICK product</div>
+    <div className='text-honolulu-blue'>Search for a SICK product</div>
   )
 }
 
