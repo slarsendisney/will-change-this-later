@@ -3,7 +3,6 @@ import { ResizablePanel } from "@/animations/ResizablePanel";
 import { NebulaLogo } from "@/assets/NebulaLogo";
 import { PathLogo } from "@/assets/PathLogo";
 import { SickLogo } from "@/assets/SickLogo";
-import Highlighter from "react-highlight-words";
 import {
   ArrowPathRoundedSquareIcon,
   ArrowTrendingUpIcon,
@@ -16,6 +15,8 @@ import { useEffect, useState } from "react";
 import { Feedback } from "../Feedback";
 import { ProductSearch } from "../ProductSearch/ProductSearch";
 import { AnimatedText } from "@/animations/AnimatedText";
+import { IntentBadge } from "../IntentBadge/IntentBadge";
+import { Navigation } from "../Navigation/Navigation";
 
 const replaceAll = (str: string, find: string, replace: string) => {
   return str.replace(new RegExp(find, "g"), replace);
@@ -219,11 +220,8 @@ export const Hero = () => {
             <>
               <div className="text-gray-400 space-y-16">
                 <div className="flex flex-col space-y-4">
-                  <div className="badge badge-outline px-2 badge-lg rounded-full badge-success mx-auto flex items-center">
-                    <MagnifyingGlassIcon className="h-4 w-4 mr-1" />
-                    PRODUCT SEARCH
-                  </div>
-                  <div className="font-code">
+                  <IntentBadge intent={data.intent} />
+                  <div className="font-code mx-auto">
                     {data.data.message
                       .split("\n")
                       .map((line: string, i: number) => (
@@ -238,8 +236,14 @@ export const Hero = () => {
                       ))}
                   </div>
                 </div>
-                <ProductSearch data={data} query={data.data.message} />
-                <Feedback />
+                {data.intent === "PRODUCT_SEARCH" && (
+                  <ProductSearch data={data} query={data.data.message} />
+                )}
+                 {data.intent === "NAVIGATION" && (
+                  <Navigation />
+                )}
+               
+                {data.intent !== "FALLBACK" &&<Feedback />}
               </div>
             </>
           )}

@@ -40,7 +40,7 @@ export const queryChatEngine = async (
   query: string
 ) => {
   const loadedResponse = await chatEngine.chat(
-    `Answer the following being concise, and related to context only: ${query}`
+    `Answer the following question being concise, and related to context only but DO NOT MENTION THAT YOU ARE USING RESULTS FROM CONTEXT: ${query}`
   );
 
   return loadedResponse;

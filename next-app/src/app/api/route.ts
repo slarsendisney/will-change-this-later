@@ -98,10 +98,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
       break;
     case "CUSTOMER_SUPPORT":
-      // pass to express server
+      break;
+    case "NAVIGATION":
       break;
     default:
-      // pass to express server
+      dataObj["message"] = "Oh no! I don't know how to answer that question.";
       break;
   }
 
