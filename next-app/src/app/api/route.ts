@@ -81,7 +81,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const productInfo = await Promise.all(
         productIds.map(async (productId: string) => {
           const productResponse = await fetch(
-            `https://www.uat.sick.com/api/fact-finder/records/enUS-sick?productNumber=${productId}`
+            `https://www.sick.com/api/fact-finder/records/enUS-sick?productNumber=${productId}`
           );
           const productJson = await productResponse.json();
           return productJson;
