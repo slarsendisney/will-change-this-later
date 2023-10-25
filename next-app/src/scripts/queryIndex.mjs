@@ -52,19 +52,12 @@ const testIndex = async () => {
 
   const response = await queryChatEngine(
     chatEngine,
-    "I am looking for a Speed Monitor that provides Safe Motion Monitoring and Control",
+    "sensor to detect transparent objects",
     false
   );
 
   console.log(response);
 
-  const response2 = await queryChatEngine(
-    chatEngine,
-    "I am searching for a sensor that can detect transparent objects",
-    false
-  );
-
-  console.log(response2);
 };
 
 const main = async () => {
