@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {children}
-        <Script async type="text/javascript" src="https://userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/e94b2a886102407180e6da6d64587496240c31106373405583192852825e5017.js" />
+        <Script async type="text/javascript" src="https://userlike-cdn-widgets.s3-eu-west-1.amazonaws.com/2e2f911a8f594f10a171a24424fdd25a7f63c1eb6ff04efab2a3b7a2d30b75d3.js" />
       </body>
     </html>
   )
