@@ -5,7 +5,7 @@ export const getStorageContext = async () => {
   console.log("💾 Creating or loading storage context");
   //storage should use var/data in the root of the project
   const storageContext = await storageContextFromDefaults({
-    persistDir: path.join(__dirname, "/var/data"),
+    persistDir: path.join(__dirname, "../../var/data"),
   });
 
   return storageContext;
