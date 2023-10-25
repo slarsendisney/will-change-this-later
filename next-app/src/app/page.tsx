@@ -3,6 +3,9 @@
 import { SickLogo } from '@/assets/SickLogo'
 import { Hero } from '@/components/Hero/Hero'
 import { useState } from 'react'
+import Search from '@/components/search'
+import ShowReel from '@/components/showreel'
+import Image from 'next/image'
 
 
 export default function Home() {
