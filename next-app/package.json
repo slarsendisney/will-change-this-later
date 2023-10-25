@@ -15,6 +15,7 @@
     "daisyui": "^3.9.3",
     "dotenv": "^16.3.1",
     "framer-motion": "10.12.16",
+    "fs-extra": "^11.1.1",
     "install": "^0.13.0",
     "llamaindex": "0.0.0-20231018030303",
     "next": "13.4.7",

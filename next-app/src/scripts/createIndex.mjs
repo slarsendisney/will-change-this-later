@@ -4,6 +4,7 @@ import {
   Document,
   storageContextFromDefaults,
 } from "llamaindex";
+import fse from "fs-extra";
 import dotenv from "dotenv";
 import fs from "node:fs/promises";
 
@@ -30,47 +31,74 @@ const metadataArrayStrings = [
 
 const createAndPersistIndexText = async () => {
   const products = await fs.readFile("./45k.json", "utf-8");
-  const filteredProducts = JSON.parse(products)
-    .filter((product) => {
-      // check product.masterValues contains all metadatastrings and metadataArrayStrings
-      const hasAllMetadata = metadatastrings.every((key) =>
-        Object.keys(product.masterValues).includes(key)
-      );
-      const hasAllMetadataArray = metadataArrayStrings.every((key) =>
-        Object.keys(product.masterValues).includes(key)
-      );
+  const filteredProducts = JSON.parse(products).filter((product) => {
+    // check product.masterValues contains all metadatastrings and metadataArrayStrings
+    const hasAllMetadata = metadatastrings.every((key) =>
+      Object.keys(product.masterValues).includes(key)
+    );
+    const hasAllMetadataArray = metadataArrayStrings.every((key) =>
+      Object.keys(product.masterValues).includes(key)
+    );
 
-      return hasAllMetadata && hasAllMetadataArray;
-    })
-    .slice(1001, 1250);
-
-  const productIdsAndDocuments = filteredProducts.map((product) => {
-    console.log(product.masterValues);
-    return [
-      product.id,
-      `${metadatastrings.map(
-        (key) => `${key.replace("Meta", "")}: ${product.masterValues[key]}`
-      )} ${metadataArrayStrings.map(
-        (key) =>
-          `${key.replace("Meta", "")}: ${product.masterValues[key].join(", ")}`
-      )}`,
-    ];
+    return hasAllMetadata && hasAllMetadataArray;
   });
 
-  console.log(productIdsAndDocuments);
+  const visitedProducts = new Set();
 
-  const documentChunks = productIdsAndDocuments.map(
-    ([id, doc], i) =>
-      new Document({ text: doc, id_: id, metadata: { productId: id } })
-  );
+  const chunkSize = 50;
+  const chunks = [];
+  let proccessedChunks = 0;
+  for (let i = 0; i < filteredProducts.length; i += chunkSize) {
+    chunks.push(filteredProducts.slice(i, i + chunkSize));
+  }
 
-  const storageContext = await getStorageContext();
+  for await (const chunk of chunks) {
+    const currentDateTimestamp = new Date().getTime();
+    const indexName = `indexProducts-${currentDateTimestamp}`;
 
-  const index = await VectorStoreIndex.fromDocuments(documentChunks, {
-    storageContext,
-  });
+    fse.copySync("./src/storage/", `./src/storage-archive/${indexName}/`, {
+      overwrite: true,
+    });
+    // precentage complete
+    console.log(`${(proccessedChunks / chunks.length) * 100}% done`);
 
-  console.log("📄 Index of Products created");
+    const productIdsAndDocuments = chunk
+      .filter((prod) => {
+        if (visitedProducts.has(prod.id)) {
+          return false;
+        }
+        visitedProducts.add(prod.id);
+        return true;
+      })
+      .map((product) => {
+        return [
+          product.id,
+          `${metadatastrings.map(
+            (key) => `${key.replace("Meta", "")}: ${product.masterValues[key]}`
+          )} ${metadataArrayStrings.map(
+            (key) =>
+              `${key.replace("Meta", "")}: ${product.masterValues[key].join(
+                ", "
+              )}`
+          )}`,
+        ];
+      });
+
+    const documentChunks = productIdsAndDocuments.map(
+      ([id, doc], i) =>
+        new Document({ text: doc, id_: id, metadata: { productId: id } })
+    );
+
+    const storageContext = await getStorageContext();
+
+    await VectorStoreIndex.fromDocuments(documentChunks, {
+      storageContext,
+    });
+
+    proccessedChunks++;
+    
+    console.log("chunk done")
+  }
 };
 
 const main = async () => {

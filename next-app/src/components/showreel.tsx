@@ -668,7 +668,7 @@ const Gallery = () => {
                   <h3 className="truncate text-sm font-medium text-white">{product.masterValues.DefName}</h3>
                 </div>
               </div>
-              <img className="h-20 w-20 flex-shrink-0 bg-gray-300" src={product.masterValues.DefPictureUrl} alt="" />
+              {/* <img className="h-20 w-20 flex-shrink-0 bg-gray-300" src={product.masterValues.DefPictureUrl} alt="" /> */}
             </div>
             <p className="mt-1 break-words text-sm text-white space-x-6 p-6">{product.masterValues.DefDescription}</p>
             <div>

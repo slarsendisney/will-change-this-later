@@ -14,31 +14,46 @@ import { m } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Feedback } from "../Feedback";
+import { ProductSearch } from "../ProductSearch/ProductSearch";
+import { AnimatedText } from "@/animations/AnimatedText";
+
+const replaceAll = (str: string, find: string, replace: string) => {
+  return str.replace(new RegExp(find, "g"), replace);
+};
 
 export const Hero = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [resultReturned, setResultReturned] = useState(false);
-  const [query, setQuery] = useState("" as string);
+  const [data, setData] = useState<any>();
+  const [query, setQuery] = useState(
+    "What lidar sensors do you have?" as string
+  );
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  const onClick = () => {
+  useEffect(() => {
+    // if query has changed update input
+  }, [query]);
+
+  const fetchStuff = async () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setResultReturned(true);
-    }, 3000);
-
-
-    fetch('/api', {
-      method: 'post',
-      body: JSON.stringify(query),
-      headers: { 'Content-Type': 'application/json' }
+    const res = await fetch("/api", {
+      method: "post",
+      body: JSON.stringify({ query }),
+      headers: { "Content-Type": "application/json" },
     });
+    const data = await res.json();
+    console.log(data);
+    setData(data);
+    setLoading(false);
+    setResultReturned(true);
+  };
 
+  const onClick = () => {
+    fetchStuff();
   };
   return (
     <div className="mx-auto w-full sm:px-6 lg:px-8 max-w-7xl">
@@ -96,12 +111,12 @@ export const Hero = () => {
                 animate={
                   loading
                     ? {
-                      rotate: 360,
-                      scale: [0.5, 0.4, 0.5],
-                    }
+                        rotate: 360,
+                        scale: [0.5, 0.4, 0.5],
+                      }
                     : {
-                      scale: 1,
-                    }
+                        scale: 1,
+                      }
                 }
                 transition={{
                   repeat: Infinity,
@@ -111,15 +126,17 @@ export const Hero = () => {
                 className="absolute top-0 left w-full h-full flex items-center justify-center"
               >
                 <NebulaLogo
-                  className={`w-96 h-96 transition-all duration-200 transform ${loading
-                    ? "opacity-80 scale-50 text-blue-400"
-                    : "opacity-10 text-gray-200"
-                    } `}
+                  className={`w-96 h-96 transition-all duration-200 transform ${
+                    loading
+                      ? "opacity-80 scale-50 text-blue-400"
+                      : "opacity-10 text-gray-200"
+                  } `}
                 />
               </m.div>
               <h2
-                className={`mx-auto max-w-2xl text-center text-5xl font-bold tracking-tight text-white sm:text-6xl transition-all duration-200 ${loading ? "opacity-0" : "opacity-100"
-                  }`}
+                className={`mx-auto max-w-2xl text-center text-5xl font-bold tracking-tight text-white sm:text-6xl transition-all duration-200 ${
+                  loading ? "opacity-0" : "opacity-100"
+                }`}
               >
                 Nebula
               </h2>
@@ -146,6 +163,7 @@ export const Hero = () => {
                     className="input input-lg w-full bg-gray-800 text-white join-item"
                     placeholder="Ask a Question"
                     onChange={(e) => setQuery(e.target.value)}
+                    // value={query}
                   />
                   <button
                     className="btn btn-primary btn-lg join-item"
@@ -185,6 +203,10 @@ export const Hero = () => {
                         }}
                         key={q + i}
                         className="card bg-gray-800 p-4"
+                        onClick={(e) => {
+                          setQuery(q);
+                          onClick();
+                        }}
                       >
                         <p>{q}</p>
                       </m.button>
@@ -194,67 +216,28 @@ export const Hero = () => {
               </div>
             </div>
           )}
-          {resultReturned && (
+          {resultReturned && data && (
             <>
               <div className="text-gray-400 space-y-16">
                 <div className="flex flex-col space-y-4">
-                  <div className="badge badge-outline p-6 badge-lg rounded-full badge-success mx-auto flex items-center">
+                  <div className="badge badge-outline px-2 badge-lg rounded-full badge-success mx-auto flex items-center">
                     <MagnifyingGlassIcon className="h-4 w-4 mr-1" />
                     PRODUCT SEARCH
                   </div>
-                  <p className="text-3xl font-medium text-center">
-                    "<span className="text-white">{query}</span>"
-                  </p>
-                </div>
-                <div className="grid grid-cols-3 gap-4">
-                  {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <m.div
-                      key={i}
-                      className="card w-full h-96 bg-base-100 shadow-xl"
-                      initial={{
-                        opacity: 0,
-                        y: -20,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        y: 0,
-                      }}
-                      transition={{
-                        delay: i / 10,
-                        duration: 0.3,
-                      }}
-                    >
-                      <figure>
-                        <Image
-                          width="600"
-                          height="200"
-                          src="/images/photo.jpeg"
-                          alt="Shoes"
+                  <div className="">
+                    {data.data.message
+                      .split("\n")
+                      .map((line: string, i: number) => (
+                        <AnimatedText
+                          text={line}
+                          key={i}
+                          delay={i / 5}
+                          className="text-xl font-medium text-left"
                         />
-                      </figure>
-                      <div className="card-body bg-gray-800">
-                        <h2 className="card-title">Shoes!</h2>
-
-                        <p>
-                          <Highlighter
-                            highlightClassName={`underline text-white bg-gray-700 rounded`}
-                            searchWords={query.split(" ").map((q, i) => i > 0 ? ` ${q} ` : `${q} `)}
-                            autoEscape={true}
-                            textToHighlight={"My test description that is all about lazy foxes and dogs"}
-                          />
-                        </p>
-                        <div className="card-actions justify-end">
-                          <button className="btn btn-ghost rounded-lg">
-                            Visit
-                          </button>
-                          <button className="btn btn-primary rounded-lg">
-                            Buy
-                          </button>
-                        </div>
-                      </div>
-                    </m.div>
-                  ))}
+                      ))}
+                  </div>
                 </div>
+                <ProductSearch data={data} query={data.data.message} />
                 <Feedback />
               </div>
             </>
@@ -337,7 +320,7 @@ export const Hero = () => {
             href="https://www.tessabreen.net"
           >
             <Image
-              alt="SLD"
+              alt="TB"
               width="40"
               height="40"
               src="/images/tessa.jpeg"

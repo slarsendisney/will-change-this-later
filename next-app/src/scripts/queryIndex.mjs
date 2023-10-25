@@ -24,10 +24,8 @@ const getStorageContext = async () => {
 export const queryChatEngine = async (chatEngine, query) => {
   const loadedResponse = await chatEngine.chat(query);
 
-  loadedResponse.sourceNodes.map((node) => {
-    console.log(node.metadata.productId);
-  })
- 
+  console.log(loadedResponse);
+
   return loadedResponse.toString();
 };
 
@@ -36,11 +34,11 @@ export const loadIndexAsChatEngine = async () => {
   const storageContext = await getStorageContext();
   const loadedIndex = await VectorStoreIndex.init({ storageContext });
   const retriever = loadedIndex.asRetriever();
-  retriever.similarityTopK = 10;
+  retriever.similarityTopK = 5;
   const chatEngine = new ContextChatEngine({
     retriever,
     chatModel: new OpenAI({
-      maxTokens: 100,
+      maxTokens: 200,
       maxRetries: 0,
       model: "gpt-3.5-turbo",
       temperature: 0,
@@ -55,11 +53,10 @@ const testIndex = async () => {
 
   const response = await queryChatEngine(
     chatEngine,
-    "what lidar products do you have and what are the differences in benefits between them?"
+    "What lidar sensors do you have?"
   );
 
   console.log(response);
-
 };
 
 const main = async () => {
