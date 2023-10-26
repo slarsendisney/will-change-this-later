@@ -74,12 +74,16 @@ const createAndPersistIndexText = async () => {
         return [
           product.id,
           `${metadatastrings.map(
-            (key) => `${key.replace("Meta", "")}: ${product.masterValues[key]}`
+            (key) =>
+              `${key.replace("Meta", "")}: ${product.masterValues[key].slice(
+                0,
+                400
+              )}`
           )} ${metadataArrayStrings.map(
             (key) =>
-              `${key.replace("Meta", "")}: ${product.masterValues[key].join(
-                ", "
-              )}`
+              `${key.replace("Meta", "")}: ${product.masterValues[key]
+                .slice(0, 5)
+                .join(", ")}`
           )}`,
         ];
       });
@@ -96,8 +100,8 @@ const createAndPersistIndexText = async () => {
     });
 
     proccessedChunks++;
-    
-    console.log("chunk done")
+
+    console.log("chunk done");
   }
 };
 

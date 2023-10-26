@@ -36,3 +36,6 @@ next-env.d.ts
 
 # data
 45k.json
+
+
+src/storage-archive

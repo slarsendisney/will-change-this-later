@@ -39,7 +39,7 @@ export const queryChatEngine = async (
   chatEngine: ContextChatEngine,
   query: string,
 ) => {
-  const loadedResponse = await chatEngine.chat(query);
+  const loadedResponse = await chatEngine.chat(`Answer the following question using the products you have from SICK in context: ${query}`);
 
   return loadedResponse
 };

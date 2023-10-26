@@ -38,12 +38,12 @@ const FeedbackForm = forwardRef<
     <form
       ref={ref}
       onSubmit={onSubmit}
-      className="absolute inset-0 md:flex items-center justify-center gap-6 md:justify-start"
+      className="flex items-center justify-center gap-6 "
     >
       <p className="text-xl text-zinc-400">
         Were these results helpful?
       </p>
-      <div className="group grid h-8 grid-cols-[1fr,1px,1fr] overflow-hidden rounded-full border border-white/10">
+      <div className="group grid h-8 grid-cols-[0.5fr,1px,0.5fr]  md:grid-cols-[1fr,1px,1fr] overflow-hidden rounded-full border border-white/10">
         <FeedbackButton data-response="yes">Yes</FeedbackButton>
         <div className="bg-zinc-900/10 dark:bg-white/10" />
         <FeedbackButton data-response="no">No</FeedbackButton>
@@ -57,7 +57,7 @@ const FeedbackThanks = forwardRef<React.ElementRef<'div'>>(
     return (
       <div
         ref={ref}
-        className="absolute inset-0 flex justify-center md:justify-start"
+        className="flex justify-center md:justify-center"
       >
         <div className="flex items-center gap-3 rounded-full py-1 pl-1.5 pr-3 text-sm ring-1 ring-inset bg-success text-success-content ring-success">
           <CheckIcon className="h-5 w-5 flex-none stroke-emerald-200 fill-success-content" />
