@@ -16,9 +16,12 @@ export const ProductSearch = ({
 }): JSX.Element => (
   <div className="grid md:grid-cols-2 gap-4">
     {(data.data.productItems as any)
-      .filter((item:any) => item.records.length > 0)
+      .filter((item: any) => item.records.length > 0)
       .map((item: any, i: number) => {
-        const { MetaTitle, MetaDescription, DefPictureUrl } = item.records[0];
+        const { MetaTitle, MetaDescription, DefPictureUrl, DefUrl } =
+          item.records[0];
+
+        console.log("item", item.records[0]);
 
         return (
           <m.div
@@ -65,8 +68,13 @@ export const ProductSearch = ({
                 />
               </p>
               <div className="card-actions justify-end">
-                <button className="btn btn-ghost rounded-lg">Visit</button>
-                <button className="btn btn-primary rounded-lg">Buy</button>
+                <a
+                  href={`https://sick.com${DefUrl}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="btn btn-primary rounded-lg">Visit</button>
+                </a>
               </div>
             </div>
           </m.div>
