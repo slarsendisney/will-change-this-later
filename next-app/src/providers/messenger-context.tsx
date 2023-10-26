@@ -41,6 +41,7 @@ export const MessengerProvider = ({ ...props }) => {
   useEffect(() => {
     const init = async () => {
       const userliketest: any = await createApi();
+      await userliketest.mount()
       setUserlike(userliketest)
     }
     init()

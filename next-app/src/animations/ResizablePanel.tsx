@@ -38,7 +38,8 @@ export const ResizablePanel = ({
     <m.div
       initial={{ height: initialHeight }}
       animate={{ height: height ? height+10  : 'auto' }}
-      className="relative overflow-hidden w-full"
+      className="relative overflow-scroll w-full"
+      // className="relative overflow-hidden w-full"
     >
       <AnimatePresence initial={false}>
         <m.div

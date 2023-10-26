@@ -38,7 +38,7 @@ const FeedbackForm = forwardRef<
     <form
       ref={ref}
       onSubmit={onSubmit}
-      className="absolute inset-0 flex items-center justify-center gap-6 md:justify-start"
+      className="absolute inset-0 md:flex items-center justify-center gap-6 md:justify-start"
     >
       <p className="text-xl text-zinc-400">
         Were these results helpful?

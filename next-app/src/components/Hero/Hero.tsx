@@ -11,25 +11,33 @@ import {
 } from "@heroicons/react/24/solid";
 import { m } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Feedback } from "../Feedback";
 import { ProductSearch } from "../ProductSearch/ProductSearch";
 import { AnimatedText } from "@/animations/AnimatedText";
 import { IntentBadge } from "../IntentBadge/IntentBadge";
 import { Navigation } from "../Navigation/Navigation";
-
-const replaceAll = (str: string, find: string, replace: string) => {
-  return str.replace(new RegExp(find, "g"), replace);
-};
+import { useMessenger } from "@/providers/messenger-context";
 
 export const Hero = () => {
   const [loading, setLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [resultReturned, setResultReturned] = useState(false);
+  const { userlike } = useMessenger();
   const [data, setData] = useState<any>();
   const [query, setQuery] = useState(
     "What lidar sensors do you have?" as string
   );
+
+  const initiateMessenger = useCallback(() => {
+    userlike && userlike.maximize()
+  }, [userlike]);
+
+  useEffect(() => {
+    if (data && resultReturned && data.intent === "CUSTOMER_SUPPORT") {
+      initiateMessenger();
+    }
+  }, [data, initiateMessenger, resultReturned]);
 
   useEffect(() => {
     setIsVisible(true);
@@ -205,8 +213,7 @@ export const Hero = () => {
                         key={q + i}
                         className="card bg-gray-800 p-4 text-center"
                         onClick={(e) => {
-                          console.log('help me find'+q, 'new q')
-                          onClick(q);
+                          onClick("Help me find" + " " + q);
                         }}
                       >
                         <p>{q}</p>
@@ -240,11 +247,9 @@ export const Hero = () => {
                 {data.intent === "PRODUCT_SEARCH" && (
                   <ProductSearch data={data} query={data.data.message} />
                 )}
-                 {data.intent === "NAVIGATION" && (
-                  <Navigation />
-                )}
-               
-                {data.intent !== "FALLBACK" &&<Feedback />}
+                {data.intent === "NAVIGATION" && <Navigation />}
+
+                {data.intent !== "FALLBACK" && <Feedback />}
               </div>
             </>
           )}
