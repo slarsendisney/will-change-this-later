@@ -203,8 +203,9 @@ export const Hero = () => {
                           duration: 0.3,
                         }}
                         key={q + i}
-                        className="card bg-gray-800 p-4"
+                        className="card bg-gray-800 p-4 text-center"
                         onClick={(e) => {
+                          console.log('help me find'+q, 'new q')
                           onClick(q);
                         }}
                       >
