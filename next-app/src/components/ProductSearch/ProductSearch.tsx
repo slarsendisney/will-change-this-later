@@ -53,7 +53,7 @@ export const ProductSearch = ({
               <h2 className="card-title">{MetaTitle || "-"}</h2>
               <p>
                 <Highlighter
-                  highlightClassName={`text-white bg-gray rounded`}
+                  highlightClassName={`text-white bg-gray-700 rounded`}
                   searchWords={query
                     .split(" ")
                     .map((q, i) => (i > 0 ? ` ${q} ` : `${q} `))}
